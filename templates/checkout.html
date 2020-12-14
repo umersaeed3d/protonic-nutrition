@@ -1,0 +1,659 @@
+{% load static %}
+{% load staticfiles %}
+    <link rel="stylesheet" href="{%static 'css/bootstrap.css'%}">
+    <link rel="stylesheet" href="{%static 'css/creditly.css'%}">
+    <link rel="stylesheet" href="{%static 'css/easy-responsive-tabs.css'%}">
+    <link rel="stylesheet" href="{%static 'css/flexslider.css'%}">
+    <link rel="stylesheet" href="{%static 'css/font-awesome.css'%}">
+    <link rel="stylesheet" href="{%static 'css/style.css'%}"><!--
+author: W3layouts
+author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<title>CheckOut</title>
+<!-- for-mobile-apps -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Grocery Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+		function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- //for-mobile-apps -->
+<link href="{% static 'css/bootstrap.css'%}" rel="stylesheet" type="text/css" media="all" />
+<link href="{% static 'css/style.css'%}" rel="stylesheet" type="text/css" media="all" />
+<!-- font-awesome icons -->
+<link href="{% static 'css/font-awesome.css'%}" rel="stylesheet" type="text/css" media="all" />
+<!-- //font-awesome icons -->
+<!-- js -->
+<script src="{% static 'js/jquery-1.11.1.min.js'%}"></script>
+<!-- //js -->
+<link href='//fonts.googleapis.com/css?family=Ubuntu:400,300,300italic,400italic,500,500italic,700,700italic' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+<!-- start-smoth-scrolling -->
+<script type="text/javascript" src="{% static 'js/move-top.js'%}"></script>
+<script type="text/javascript" src="{% static 'js/easing.js'%}"></script>
+<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		$(".scroll").click(function(event){		
+			event.preventDefault();
+			$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+		});
+	});
+</script>
+<!-- start-smoth-scrolling -->
+</head>
+	
+<body>
+<!-- header -->
+		<div class="agileits_header">
+		<div class="w3l_offers">
+			<a href="products.html">Today's special Offers !</a>
+		</div>
+
+		<div class="product_list_header">  
+			<form action="#" method="post" class="last">
+                <fieldset>
+                    <input type="hidden" name="cmd" value="_cart" />
+                    <input type="hidden" name="display" value="1" />
+                    <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary" onclick="cartdata()" >View Your Cart</button>
+                </fieldset>
+            </form>
+		</div>
+		<div class="w3l_header_right">
+			<ul>
+				<li class="dropdown profile_details_drop">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i><span class="caret"></span></a>
+					<div class="mega-dropdown-menu">
+						<div class="w3ls_vegetables">
+							<ul class="dropdown-menu drp-mnu">
+								<li><a href="{% if user.is_authenticated %}/logout{% else %}/login{% endif %}" >{% if user.is_authenticated %} Logout {% else %} Login {% endif %}</a></li>
+								{% if user.is_authenticated %}
+                                    <li>{{  user.get_username }}</li>
+                                {% else %}
+                                    <li><a href="/register">Sign up</a></li>
+                                {% endif %}
+							</ul>
+						</div>                  
+					</div>	
+				</li>
+			</ul>
+		</div>
+		<div class="w3l_header_right1">
+			<h2><a href="mail.html">Contact Us</a></h2>
+		</div>
+		<div class="clearfix"> </div>
+	</div>
+<!-- script-for sticky-nav -->
+	<script>
+	$(document).ready(function() {
+		 var navoffeset=$(".agileits_header").offset().top;
+		 $(window).scroll(function(){
+			var scrollpos=$(window).scrollTop(); 
+			if(scrollpos >=navoffeset){
+				$(".agileits_header").addClass("fixed");
+			}else{
+				$(".agileits_header").removeClass("fixed");
+			}
+		 });
+		 
+	});
+	</script>
+
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cart</h4>
+      </div>
+      <div class="modal-body">
+        <table id="cart" class="table table-hover table-condensed" >
+    				<thead>
+						<tr>
+							<th style="width:50%">Product</th>
+							<th style="width:10%">Price</th>
+							<th style="width:8%">Quantity</th>
+							<th style="width:22%" class="text-center">Subtotal</th>
+							<th style="width:10%"></th>
+						</tr>
+					</thead>
+					<tbody id="tbody">
+                        <tr><td>Your Cart is empty</td></tr>
+					</tbody>
+					<tfoot>
+						<tr class="visible-xs">
+							<td class="text-center" ><strong ></strong></td>
+						</tr>
+						<tr>
+							<td><a href="/" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+							<td colspan="2" class="hidden-xs"></td>
+							<td class="hidden-xs text-center"><strong id="subtotal"></strong></td>
+							<td><a href="/checkout" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
+						</tr>
+					</tfoot>
+				</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- //script-for sticky-nav -->
+	<div class="logo_products">
+		<div class="container">
+			<div class="w3ls_logo_products_left">
+				<h1><a href="/"><img src="{% static 'images/logo.jpg'%}"> </a></h1>
+			</div>
+			<div class="w3ls_logo_products_left1">
+				<ul class="special_items">
+                    <li><a href="/"><b>Home</b></a><i></i></li>
+					<li><a href="/about"><b>About Us</b></a><i></i></li>
+					<li><a href="/faqs"><b>Faq's</b></a><i></i></li>
+					<li><a href="/mail"><b>Contact Us</b></a></li>
+				</ul>
+			</div>
+			<div class="w3ls_logo_products_left1">
+				<ul class="phone_email">
+					<li><i class="fa fa-phone" aria-hidden="true"></i>(+92)3046584342</li>
+					<li><i class="fa fa-envelope-o" aria-hidden="true"></i><a href="mailto:protonicnutrition@gmail.com">protonicnutrition@gmail.com</a></li>
+				</ul>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+<!-- //header -->
+<!-- products-breadcrumb -->
+	<div class="products-breadcrumb">
+		<div class="container">
+			<ul>
+				<li><i class="fa fa-home" aria-hidden="true"></i><a href="/">Home</a><span>|</span></li>
+				<li>Checkout</li>
+			</ul>
+		</div>
+	</div>
+
+
+<!-- about -->
+		<div class="privacy about">
+			<h3>Chec<span>kout</span></h3>
+			
+	      <div class="checkout-right">
+					<h4>Your shopping cart contains: <span>{{ length }} Products</span></h4>
+				<table class="timetable_sub">
+					<thead>
+						<tr>
+							<th>SL No.</th>	
+							<th>Product</th>
+							<th>Quantity</th>
+							<th>Product Name</th>
+						
+							<th>Price</th>
+							<th>Remove</th>
+						</tr>
+					</thead>
+
+					<tbody>
+                    {% for c in cart %}
+                        <tr class="rem1" id="{{ c.0 }}">
+						<td class="invert">{{ c.0 }}</td>
+						<td class="invert-image"><a href="single/{{ c.p_id }}"><img src='/media/{{ c.1 }}' alt=" " class="img-responsive"></a></td>
+						<td class="invert">
+							 <div class="quantity">
+								<div class="form-group">
+                                    <input type="number" value="{{ c.4 }}" onchange="updatequantity({{ c.0 }},this.value)" class="form-control" id="quantity_{{ c.0 }}">
+								</div>
+							</div>
+						</td>
+						<td class="invert">{{c.2}}</td>
+
+						<td class="invert" id="price_{{ c.0 }}">{% widthratio c.5 1 c.4 %}
+</td>
+						<td class="invert">
+							<div class="rem">
+								<button class="btn btn-danger btn-sm" onclick="deletedata({{ c.0 }})"><i class="fa fa-trash-o"></i></button>
+							</div>
+
+						</td>
+					</tr>
+                    {% endfor %}
+
+
+                    </tbody>
+                </table>
+			</div>
+			<div class="checkout-left">	
+				<div class="col-md-4 checkout-left-basket">
+                    <a href="/"><h4>Continue to basket</h4></a>
+					<ul>
+                        <script>
+                            var total = 0;
+
+                        </script>
+                        {% for i in cart %}
+                            <script>total += {% widthratio i.5 1 i.4 %}</script>
+                            <li id="li_{{ i.0 }}">{{ i.2 }} <i>-</i> <span id="price_2_{{ i.0 }}">Rs. {% widthratio i.5 1 i.4 %}</span></li>
+                        {% endfor %}
+
+
+                        <li>Total <i>-</i> <span id="subtotal_2"></span></li>
+                        <script>$('#subtotal_2').text('Rs '+total);
+                        </script>
+                    </ul>
+				</div>
+				<div class="col-md-8 address_form_agile">
+					  <h4>Add a new Details</h4>
+				<form action="/payment" method="post" class="creditly-card-form agileinfo_form">
+                    {% csrf_token %}
+									<section class="creditly-wrapper wthree, w3_agileits_wrapper">
+										<div class="information-wrapper">
+											<div class="first-row form-group">
+												<div class="controls">
+													<label class="control-label">Full name: </label>
+													<input class="billing-address-name form-control" type="text" name="name" placeholder="Full name">
+												</div>
+												<div class="w3_agileits_card_number_grids">
+													<div class="w3_agileits_card_number_grid_left">
+														<div class="controls">
+															<label class="control-label">Mobile number:</label>
+														    <input class="form-control" type="number" placeholder="Mobile number" name="mobile">
+														</div>
+													</div>
+
+													<div class="clear"> </div>
+												</div>
+                                                <div class="controls">
+                                                    <label class="control-label">Email: </label>
+                                                    <input class="form-control" type="email" name="email" placeholder="Town/City">
+                                                </div>
+                                                <div class="controls">
+                                                    <label class="control-label">Town/City: </label>
+                                                    <input class="form-control" type="text" name="city" placeholder="Town/City">
+                                                </div>
+
+                                                <div class="controls">
+													<label class="control-label">Address </label>
+												 <input class="form-control" type="text" name="address" placeholder="Address">
+												</div>
+
+                                                 <div class="controls">
+													<label >Choose Payment Method </label><br>
+                                                     <div class="row">
+                                                     <input  type="radio"  name="method" value="Cash On Delivery" required><label >Cash On delivery</label>
+												    </div>
+												    <div class="row">
+                                                     <input  type="radio"  name="method" value="Card" onclick="showcard()" required><label >Card</label>
+												    </div>
+                                                 </div>
+
+  <div class="row"  id="card_row" style="display: none;">
+  <div class="col-75">
+    <div class="container">
+      <form action="#" method="POST">
+
+        <div class="row">
+
+          <div class="col-50">
+            <h3>Payment</h3>
+            <label for="fname">Accepted Cards</label>
+            <div class="form-group">
+              <select name="cardtype" class="form-control">
+                <option value="Visa" selected>Visa</option>
+                <option value="MasterCard">MasterCard</option>
+              </select>
+            </div>
+            <br>
+              <div class="form-group">
+
+
+            <label for="cname">Name on Card</label>
+            <input type="text" id="cname" name="cardname" placeholder="John More Doe" class="form-control">
+              </div>
+              <div class="form-group">
+
+
+            <label for="ccnum">Credit card number</label>
+            <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444" class="form-control">
+                  </div>
+              <div class="form-group">
+
+
+            <label for="expmonth">Exp Month</label>
+            <input type="text" id="expmonth" name="expmonth" placeholder="07" class="form-control">
+                  </div>
+
+            <div class="row">
+              <div class="form-group">
+                <label for="expyear">Exp Year</label>
+                <input type="text" id="expyear" name="expyear" placeholder="2018" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="cvv">CVV</label>
+                <input type="text" id="cvv" name="cvv" placeholder="352" class="form-control">
+              </div>
+            </div>
+          </div>
+
+        </div>
+        
+        
+      </form>
+    </div>
+  </div>
+</div>
+
+
+											<button class="submit check_out" type="submit">Delivery to this Address</button>
+										</div>
+									</section>
+								</form>
+
+					</div>
+			
+				<div class="clearfix"> </div>
+				
+			</div>
+
+		</div>
+<!-- //about -->
+
+		<div class="clearfix"></div>
+
+<!-- //banner -->
+
+
+<!-- newsletter -->
+
+
+		<div class="newsletter">
+		<div class="container">
+			<div class="w3agile_newsletter_left">
+				<h3>Receive Updates On Supplements! Sign Up Here!</h3>
+			</div>
+			<div class="w3agile_newsletter_right">
+				<form action="#" method="post">
+					<input type="email" name="Email" value="Email" onfocus= "this.value = '';" onblur="if (this.value = '') {this.value = 'Email';}" required="" title="">
+					<input type="submit" value="subscribe now" title="">
+				</form>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+<!-- //newsletter -->
+<!-- footer -->
+<!-- footer -->
+		<div class="footer">
+		<div class="container">
+			<div class="col-md-3 w3_footer_grid">
+				<h3>information</h3>
+				<ul class="w3_footer_grid_list">
+					<li><a href="/about">About Us</a></li>
+					<li><a href="/faqs">Return Policy</a></li>
+					<li><a href="/mail">Contact Us</a></li>
+				</ul>
+			</div>
+			<div class="col-md-3 w3_footer_grid">
+				<h3>policy info</h3>
+				<ul class="w3_footer_grid_list">
+					<li><a href="/faqs">FAQ</a></li>
+					<li><a href="/about">privacy policy</a></li>
+				</ul>
+			</div>
+			<div class="col-md-3 w3_footer_grid">
+				<h3>Quick Links</h3>
+				<ul class="w3_footer_grid_list">
+					{% for c in category %}
+                        <li><a href="/products/{{ c.c_id }}">{{ c.c_name }}</a></li>
+                    {% endfor %}
+                </ul>
+
+			</div>
+			<div class="col-md-3 w3_footer_grid">
+				<h3>Facebook Live Updates</h3>
+				<ul class="w3_footer_grid_list1">
+					<li><label class="fa fa-facebook" aria-hidden="true"></label><i>01 day ago</i><span>Psychotic On Sale <a href="https://facebook.com/protonicnutrition"></a>
+						Yes Its True! The Best Pre On Sale
+					<li><label class="fa fa-facebook" aria-hidden="true"></label><i>02 day ago</i><span>Flat Discount On Serious Mass <a href="https://facebook.com/protonicnutrition"></a>
+						Its time to gain
+                </span></li></ul>
+			</div>
+			<div class="clearfix"> </div>
+			<div class="agile_footer_grids">
+				<div class="col-md-3 w3_footer_grid agile_footer_grids_w3_footer">
+					<div class="w3_footer_grid_bottom">
+						<h4>100% secure payments</h4>
+						<img src="{% static 'images/card.png'%}" alt=" " class="img-responsive" />
+					</div>
+				</div>
+				<div class="col-md-3 w3_footer_grid agile_footer_grids_w3_footer">
+					<div class="w3_footer_grid_bottom">
+						<h5>Find Us On Social Media!</h5>
+						<ul class="agileits_social_icons">
+							<li><a href="https://facebook.com/protonicnutrition" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+							<li><a href="https://instagram.com/protonic_nutrition" class="instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+			<div class="wthree_footer_copy">
+				<p>© 2020 Protonic Nutrition. All rights reserved | Designed by Umer & Abdullah </p>
+			</div>
+		</div>
+	</div>
+<!-- //footer -->
+<!-- js -->
+<script src="{% static 'js/jquery-1.11.1.min.js'%}"></script>
+							 <!--quantity-->
+									<script>
+									$('.value-plus').on('click', function(){
+										var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)+1;
+										divUpd.text(newVal);
+									});
+
+									$('.value-minus').on('click', function(){
+										var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)-1;
+										if(newVal>=1) divUpd.text(newVal);
+									});
+									</script>
+								<!--quantity-->
+							<script>
+								$('.close1').on('click', function(){
+										$('.rem1').remove();
+								});
+                            </script>
+
+                            <script>$(document).ready(function() {
+								$('.close2').on('click', function(){
+									$('.rem2').fadeOut('slow', function(){
+										$('.rem2').remove();
+									});
+									});	  
+								});
+						   </script>
+						  	<script>$(document).ready(function() {
+								$('.close3').on('click', function(){
+									$('.rem3').fadeOut('slow', function(){
+										$('.rem3').remove();
+									});
+									});	  
+								});
+						   </script>
+
+<!-- //js -->
+<!-- script-for sticky-nav -->
+	<script>
+	$(document).ready(function() {
+		 var navoffeset=$(".agileits_header").offset().top;
+		 $(window).scroll(function(){
+			var scrollpos=$(window).scrollTop(); 
+			if(scrollpos >=navoffeset){
+				$(".agileits_header").addClass("fixed");
+			}else{
+				$(".agileits_header").removeClass("fixed");
+			}
+		 });
+		 
+	});
+	</script>
+<!-- //script-for sticky-nav -->
+<!-- start-smoth-scrolling -->
+<script type="text/javascript" src="{% static 'js/move-top.js'%}"></script>
+<script type="text/javascript" src="{% static 'js/easing.js'%}"></script>
+<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		$(".scroll").click(function(event){		
+			event.preventDefault();
+			$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+		});
+	});
+</script>
+<!-- start-smoth-scrolling -->
+<!-- Bootstrap Core JavaScript -->
+<script src="{% static 'js/bootstrap.min.js'%}"></script>
+<script>
+$(document).ready(function(){
+    $(".dropdown").hover(            
+        function() {
+            $('.dropdown-menu', this).stop( true, true ).slideDown("fast");
+            $(this).toggleClass('open');        
+        },
+        function() {
+            $('.dropdown-menu', this).stop( true, true ).slideUp("fast");
+            $(this).toggleClass('open');       
+        }
+    );
+});
+</script>
+
+<script>
+    function showcard(){
+
+        $('#card_row').css('display','block');
+    }
+    function deletedata(id) {
+            $.ajax({
+               type:'GET',
+               url:'/delete',
+               data:{'id':id},
+               success:function(e) {
+                    $('#'+id).remove()
+                    $('#li_'+id).remove()
+                     var subtotal = 0;
+
+
+
+                   $.each(e, function( index, value ) {
+                       subtotal += value[5];
+
+                   });
+                   $('#subtotal').text('Rs'+subtotal);
+               }
+            });
+        }
+
+        function cartdata() {
+            $.ajax({
+               type:'GET',
+               url:'/cartdata',
+               data:{},
+               success:function(e) {
+                    var subtotal = 0;
+
+                   if(e != 'Cart is empty'){
+                       $('#tbody').empty();
+                       $.each(e, function( index, value ) {
+                            subtotal += value[5];
+                         $('#tbody').append( '<tr id="'+value[0]+'"><td data-th="Product"><div class="row"><div class="col-sm-2 hidden-xs"><img src="/media/'+value[1]+'" alt="..." class="img-responsive"/></div><div class="col-sm-10"><h4 class="nomargin">'+value[2]+'</h4><p>'+value[3]+'.</p></div></div></td><td data-th="Price">Rs. '+value[5]+'</td><td data-th="Quantity"><span>'+value[4]+'</span></td><td data-th="Subtotal" class="text-center">Rs. '+value[5]*value[4]+'</td></tr>');
+                        });
+                       $('#subtotal').text('Rs'+subtotal);
+                    }
+
+                    {#alert('Product has been added into cart');#}
+
+
+
+
+               }
+            });
+        }
+
+
+
+
+        function updatequantity(id,value) {
+            $.ajax({
+               type:'GET',
+               url:'/updatequantity',
+               data:{'id':id,'value':value},
+               success:function(e) {
+                    var subtotal = 0;
+
+
+
+                   $.each(e, function( index, value ) {
+                       subtotal += value[5];
+                       $('#quantity_'+id).val(value[4]);
+                       $('#price_'+id).text('Rs '+value[5]);
+                       $('#price_2_'+id).text('Rs '+value[5]);
+                   });
+                   $('#subtotal').text('Rs'+subtotal);
+
+
+
+
+
+
+
+               }
+            });
+        }
+</script>
+<!-- here stars scrolling icon -->
+	<script type="text/javascript">
+		$(document).ready(function() {
+			/*
+				var defaults = {
+				containerID: 'toTop', // fading element id
+				containerHoverID: 'toTopHover', // fading element hover id
+				scrollSpeed: 1200,
+				easingType: 'linear' 
+				};
+			*/
+								
+			$().UItoTop({ easingType: 'easeOutQuart' });
+								
+			});
+	</script>
+<!-- //here ends scrolling icon -->
+
+<script>
+		paypal.minicart.render();
+
+		paypal.minicart.cart.on('checkout', function (evt) {
+			var items = this.items(),
+				len = items.length,
+				total = 0,
+				i;
+
+			// Count the number of each item in the cart
+			for (i = 0; i < len; i++) {
+				total += items[i].get('quantity');
+			}
+
+			if (total < 3) {
+				alert('The minimum order quantity is 3. Please add more to your shopping cart before checking out');
+				evt.preventDefault();
+			}
+		});
+
+	</script>
+</body>
+</html>

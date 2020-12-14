@@ -1,0 +1,206 @@
+ {% load static %}
+ {% load staticfiles %}
+    <link rel="stylesheet" href="{%static 'css/bootstrap.css'%}">
+    <link rel="stylesheet" href="{%static 'css/creditly.css'%}">
+    <link rel="stylesheet" href="{%static 'css/easy-responsive-tabs.css'%}">
+    <link rel="stylesheet" href="{%static 'css/flexslider.css'%}">
+    <link rel="stylesheet" href="{%static 'css/font-awesome.css'%}">
+    <link rel="stylesheet" href="{%static 'css/style.css'%}"><!--
+author: W3layouts
+author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<title>About Us</title>
+<!-- for-mobile-apps -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Grocery Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+		function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- //for-mobile-apps -->
+<link href="{% static 'css/bootstrap.css'%}" rel="stylesheet" type="text/css" media="all" />
+<link href="{% static 'css/style.css'%}" rel="stylesheet" type="text/css" media="all" />
+<!-- font-awesome icons -->
+<link href="{% static 'css/font-awesome.css'%}" rel="stylesheet" type="text/css" media="all" />
+<!-- //font-awesome icons -->
+<!-- js -->
+<script src="{% static 'js/jquery-1.11.1.min.js'%}"></script>
+<!-- //js -->
+<link href='//fonts.googleapis.com/css?family=Ubuntu:400,300,300italic,400italic,500,500italic,700,700italic' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+<!-- start-smoth-scrolling -->
+<script type="text/javascript" src="{% static 'js/move-top.js'%}"></script>
+<script type="text/javascript" src="{% static 'js/easing.js'%}"></script>
+<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		$(".scroll").click(function(event){
+			event.preventDefault();
+			$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+		});
+	});
+</script>
+<!-- start-smoth-scrolling -->
+</head>
+
+<body>
+<!-- header -->
+		<div class="agileits_header">
+		<div class="w3l_offers">
+			<a href="http://127.0.0.1:8000/">Today's special Offers !</a>
+		</div>
+
+		<div class="product_list_header">
+			<form action="#" method="post" class="last">
+                <fieldset>
+                    <input type="hidden" name="cmd" value="_cart" />
+                    <input type="hidden" name="display" value="1" />
+                    <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary" onclick="cartdata()" >View Your Cart</button>
+                </fieldset>
+            </form>
+		</div>
+		<div class="w3l_header_right">
+			<ul>
+				<li class="dropdown profile_details_drop">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i><span class="caret"></span></a>
+					<div class="mega-dropdown-menu">
+						<div class="w3ls_vegetables">
+							<ul class="dropdown-menu drp-mnu">
+								<li><a href="{% if user.is_authenticated %}/logout{% else %}/login{% endif %}" >{% if user.is_authenticated %} Logout {% else %} Login {% endif %}</a></li>
+								{% if user.is_authenticated %}
+                                    <li>{{  user.get_username }}</li>
+                                {% else %}
+                                    <li><a href="/register">Sign up</a></li>
+                                {% endif %}
+							</ul>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="w3l_header_right1">
+			<h2><a href="mail.html">Contact Us</a></h2>
+		</div>
+		<div class="clearfix"> </div>
+	</div>
+<!-- script-for sticky-nav -->
+	<script>
+	$(document).ready(function() {
+		 var navoffeset=$(".agileits_header").offset().top;
+		 $(window).scroll(function(){
+			var scrollpos=$(window).scrollTop();
+			if(scrollpos >=navoffeset){
+				$(".agileits_header").addClass("fixed");
+			}else{
+				$(".agileits_header").removeClass("fixed");
+			}
+		 });
+
+	});
+	</script>
+<!-- //script-for sticky-nav -->
+	<div class="logo_products">
+		<div class="container">
+			<div class="w3ls_logo_products_left">
+				<h1><a href="/"><img src="{% static 'images/logo.jpg'%}"> </a></h1>
+			</div>
+			<div class="w3ls_logo_products_left1">
+				<ul class="special_items">
+                    <li><a href="/"><b>Home</b></a><i></i></li>
+					<li><a href="/about"><b>About Us</b></a><i></i></li>
+					<li><a href="/faqs"><b>Faq's</b></a><i></i></li>
+					<li><a href="/mail"><b>Contact Us</b></a></li>
+				</ul>
+			</div>
+			<div class="w3ls_logo_products_left1">
+				<ul class="phone_email">
+					<li><i class="fa fa-phone" aria-hidden="true"></i>(+92)3046584342</li>
+					<li><i class="fa fa-envelope-o" aria-hidden="true"></i><a href="mailto:protonicnutrition@gmail.com">protonicnutrition@gmail.com</a></li>
+				</ul>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+<!-- //header -->
+<!-- products-breadcrumb -->
+	<div class="products-breadcrumb">
+		<div class="container">
+			<ul>
+				<li><i class="fa fa-home" aria-hidden="true"></i><a href="/">Home</a><span>|</span></li>
+				<li>Mail Us</li>
+			</ul>
+		</div>
+	</div>
+
+	
+<!-- mail -->
+		<div class="mail">
+			<h3>Mail Us</h3>
+			<div class="agileinfo_mail_grids">
+				<div class="col-md-4 agileinfo_mail_grid_left">
+					<ul>
+						<li><i class="fa fa-home" aria-hidden="true"></i></li>
+						<li>address<span>Bahria University Lahore Campus Office</span></li>
+					</ul>
+					<ul>
+						<li><i class="fa fa-envelope" aria-hidden="true"></i></li>
+						<li>email<span><a href="mailto:protonicnutrition@gmail.com">protonicnutrition@gmail.com</a></span></li>
+					</ul>
+					<ul>
+						<li><i class="fa fa-phone" aria-hidden="true"></i></li>
+						<li>call to us<span>(+92) 3046584342</span></li>
+					</ul>
+				</div>
+				<div class="col-md-8 agileinfo_mail_grid_right">
+					<form action="/mailsubmit" method="post">
+                        {% csrf_token %}
+						<div class="col-md-6 wthree_contact_left_grid">
+							<input type="text" name="name" placeholder="Name*" required="" title="">
+							<input type="email" name="email" placeholder="Email*" required="" title="">
+						</div>
+						<div class="col-md-6 wthree_contact_left_grid">
+							<input type="number" name="telephone" placeholder="Telephone*" required="" title="">
+							<input type="text" name="subject" placeholder="Subject*" required="" title="">
+						</div>
+						<div class="clearfix"> </div>
+						<textarea  name="body" required="" title="" placeholder="message..."></textarea>
+						<input type="submit" value="Submit">
+						<input type="reset" value="Clear">
+					</form>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+<!-- //mail -->
+		</div>
+		<div class="clearfix"></div>
+	</div>
+<!-- //banner -->
+<!-- map -->
+	<div class="map">
+		<iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d96748.15352429623!2d-74.25419879353115!3d40.731667701988506!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sshopping+mall+in+New+York%2C+NY%2C+United+States!5e0!3m2!1sen!2sin!4v1467205237951" style="border:0"></iframe>
+	</div>
+<!-- //map -->
+<!-- newsletter -->
+<div class="newsletter">
+		<div class="container">
+			<div class="w3agile_newsletter_left">
+				<h3>Receive Updates On Supplements! Sign Up Here!</h3>
+			</div>
+			<div class="w3agile_newsletter_right">
+				<form action="#" method="post">
+					<input type="email" name="Email" value="Email" onfocus="this.value = '';" onblur="if (this.value = '') {this.value = 'Email';}" required="" title="">
+					<input type="submit" value="subscribe now">
+				</form>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+<!-- //newsletter -->
+<!-- footer -->
+		{% include "footer.html" %}
+</html>

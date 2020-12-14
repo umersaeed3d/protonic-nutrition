@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+{% load bootstrap3 %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        
+        <div class="col-md-12">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-header">Order Lists</div>
+
+                <div class="card-body">
+                     {% if messages %}
+                    <ul class="messages">
+                        {% for msg in messages %}
+                        <li>
+                            <div class="alert alert-{{msg.level_tag}}" role="alert">
+                            {{msg.message}}
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    <div class="dt_colVis_buttons"></div>
+            <table id="datatable" class="table table-bordered" cellspacing="0" width="100%" style="overflow: scroll">
+                <thead>
+                <tr>
+                    <th>Order No.</th>
+                    <th>Name </th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>Phone No.</th>
+                    <th>Method</th>
+                    <th>Card Name</th>
+                    <th>Card Number</th>
+                    <th>Exp Month</th>
+                    <th>Exp Year</th>
+                    <th>CVV</th>
+                    <th>Date</th>
+
+                    <th>Manage</th>
+                    
+                </tr>
+                </thead>
+
+               <tbody>
+                  {% for f in table %}
+                    <tr>
+                         <td>{{f.o_id}}</td>
+                         <td>{{f.name}}</td>
+
+                         <td>{{f.address}}</td>
+                         <td>{{f.city}}</td>
+                         <td>{{f.mobile}}</td>
+                         <td>{{f.method}}</td>
+                        <td>{{f.cardname}}</td>
+                        <td>{{f.cardnumber}}</td>
+                        <td>{{f.expmonth}}</td>
+                        <td>{{f.expyear}}</td>
+                        <td>{{f.cvv}}</td>
+                         <td>{{f.date}}</td>
+
+                        <td><a href="/order/{{f.o_id}}">See Order</a></td>
+
+                     </tr>
+                  {% endfor %}
+
+
+
+
+               </tbody>
+            </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+ $(document).ready( function () {
+    $('#datatable').DataTable();
+} );
+</script>
+
+{% endblock %}
+

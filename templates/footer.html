@@ -1,0 +1,221 @@
+{% load static %}
+    {% load staticfiles %}
+<!-- footer -->
+	<div class="footer">
+		<div class="container">
+			<div class="col-md-3 w3_footer_grid">
+				<h3>information</h3>
+				<ul class="w3_footer_grid_list">
+					<li><a href="/about">About Us</a></li>
+					<li><a href="/faqs">Return Policy</a></li>
+					<li><a href="/mail">Contact Us</a></li>
+				</ul>
+			</div>
+			<div class="col-md-3 w3_footer_grid">
+				<h3>policy info</h3>
+				<ul class="w3_footer_grid_list">
+					<li><a href="/faqs">FAQ</a></li>
+					<li><a href="/about">privacy policy</a></li>
+				</ul>
+			</div>
+			<div class="col-md-3 w3_footer_grid">
+				<h3>Quick Links</h3>
+				<ul class="w3_footer_grid_list">
+					{% for c in category %}
+                        <li><a href="/products/{{ c.c_id }}">{{ c.c_name }}</a></li>
+                    {% endfor %}
+                </ul>
+
+			</div>
+			<div class="col-md-3 w3_footer_grid">
+				<h3>Facebook Live Updates</h3>
+				<ul class="w3_footer_grid_list1">
+					<li><label class="fa fa-facebook" aria-hidden="true"></label><i>01 day ago</i><span>Psychotic On Sale <a href="#">https://facebook.com/protonicnutrition</a>
+						Yes Its True! The Best Pre On Sale
+					<li><label class="fa fa-facebook" aria-hidden="true"></label><i>02 day ago</i><span>Flat Discount On Serious Mass <a href="#">https://facebook.com/protonicnutrition</a>
+						Its time to gain
+                </span></li></ul>
+			</div>
+			<div class="clearfix"> </div>
+			<div class="agile_footer_grids">
+				<div class="col-md-3 w3_footer_grid agile_footer_grids_w3_footer">
+					<div class="w3_footer_grid_bottom">
+						<h4>100% secure payments</h4>
+						<img src="{% static 'images/card.png'%}" alt=" " class="img-responsive" />
+					</div>
+				</div>
+				<div class="col-md-3 w3_footer_grid agile_footer_grids_w3_footer">
+					<div class="w3_footer_grid_bottom">
+						<h5>Find Us On Social Media!</h5>
+						<ul class="agileits_social_icons">
+							<li><a href="https://facebook.com/protonicnutrition" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+							<li><a href="https://instagram.com/protonic_nutrition" class="instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+			<div class="wthree_footer_copy">
+				<p>© 2020 Protonic Nutrition. All rights reserved | Designed by Umer & Abdullah </p>
+			</div>
+		</div>
+	</div>
+<!-- //footer -->
+<!-- Bootstrap Core JavaScript -->
+<script src="{% static 'js/bootstrap.min.js'%}"></script>
+<script>
+$(document).ready(function(){
+    $(".dropdown").hover(
+        function() {
+            $('.dropdown-menu', this).stop( true, true ).slideDown("fast");
+            $(this).toggleClass('open');
+        },
+        function() {
+            $('.dropdown-menu', this).stop( true, true ).slideUp("fast");
+            $(this).toggleClass('open');
+        }
+    );
+});
+</script>
+<!-- here stars scrolling icon -->
+	<script type="text/javascript">
+		$(document).ready(function() {
+			/*
+				var defaults = {
+				containerID: 'toTop', // fading element id
+				containerHoverID: 'toTopHover', // fading element hover id
+				scrollSpeed: 1200,
+				easingType: 'linear'
+				};
+			*/
+
+			$().UItoTop({ easingType: 'easeOutQuart' });
+
+			});
+	</script>
+<!-- //here ends scrolling icon -->
+<script src="{% static 'js/minicart.js'%}"></script>
+<script>
+		paypal.minicart.render();
+
+		paypal.minicart.cart.on('checkout', function (evt) {
+			var items = this.items(),
+				len = items.length,
+				total = 0,
+				i;
+
+			// Count the number of each item in the cart
+			for (i = 0; i < len; i++) {
+				total += items[i].get('quantity');
+			}
+
+			if (total < 1) {
+				alert('The minimum order quantity is 1. Please add more to your shopping cart before checking out');
+				evt.preventDefault();
+			}
+		});
+
+	</script>
+</body>
+<!-- script-for sticky-nav -->
+	<script>
+	$(document).ready(function() {
+		 var navoffeset=$(".agileits_header").offset().top;
+		 $(window).scroll(function(){
+			var scrollpos=$(window).scrollTop();
+			if(scrollpos >=navoffeset){
+				$(".agileits_header").addClass("fixed");
+			}else{
+				$(".agileits_header").removeClass("fixed");
+			}
+		 });
+
+	});
+	</script>
+ <script>
+        function deletedata(id) {
+            $.ajax({
+               type:'GET',
+               url:'/delete',
+               data:{'id':id},
+               success:function() {
+                    cartdata()
+
+               }
+            });
+        }
+
+        function cartdata() {
+            $.ajax({
+               type:'GET',
+               url:'/cartdata',
+               data:{},
+               success:function(e) {
+                    var subtotal = 0;
+
+                   if(e != 'Cart is empty'){
+                       $('#tbody').empty();
+                       $.each(e, function( index, value ) {
+                            subtotal += value[5];
+                         $('#tbody').append( '<tr id="'+value[0]+'"><td data-th="Product"><div class="row"><div class="col-sm-2 hidden-xs"><img src="/media/'+value[1]+'" alt="..." class="img-responsive"/></div><div class="col-sm-10"><h4 class="nomargin">'+value[2]+'</h4><p>'+value[3]+'.</p></div></div></td><td data-th="Price">Rs. '+value[5]+'</td><td data-th="Quantity"><input type="number" class="form-control text-center" value="'+value[4]+'" id="quantity" onchange="updatequantity('+value[0]+',this.value)"></td><td data-th="Subtotal" class="text-center">Rs. '+value[5]*value[4]+'</td><td class="actions" data-th=""><button class="btn btn-danger btn-sm" onclick="deletedata('+value[0]+',this)"><i class="fa fa-trash-o"></i></button></td></tr>');
+                        });
+                       $('#subtotal').text('Rs'+subtotal);
+                    }
+
+                    {#alert('Product has been added into cart');#}
+
+
+
+
+               }
+            });
+        }
+
+        function updatequantity(id,value) {
+            $.ajax({
+               type:'GET',
+               url:'/updatequantity',
+               data:{'id':id,'value':value},
+               success:function(e) {
+                    var subtotal = 0;
+
+
+                   $('#tbody').empty();
+                   $.each(e, function( index, value ) {
+                        subtotal += value[5];
+                     $('#tbody').append( '<tr id="'+value[0]+'"><td data-th="Product"><div class="row"><div class="col-sm-2 hidden-xs"><img src="/media/'+value[1]+'" alt="..." class="img-responsive"/></div><div class="col-sm-10"><h4 class="nomargin">'+value[2]+'</h4><p>'+value[3]+'.</p></div></div></td><td data-th="Price">Rs. '+value[5]+'</td><td data-th="Quantity"><input type="number" class="form-control text-center" value="'+value[4]+'" id="quantity" onchange="updatequantity('+value[0]+',this.value)"></td><td data-th="Subtotal" class="text-center">Rs. '+value[5]*value[4]+'</td><td class="actions" data-th=""><button class="btn btn-danger btn-sm" onclick="deletedata('+value[0]+',this)"><i class="fa fa-trash-o"></i></button></td></tr>');
+                    });
+                   $('#subtotal').text('Rs'+subtotal);
+
+
+                    {#alert('Product has been added into cart');#}
+
+
+
+
+               }
+            });
+        }
+        function addtocart(id) {
+            $.ajax({
+               type:'GET',
+               url:'/addtocart',
+               data:{'id':id},
+               success:function(e) {
+                   $('#tbody').empty();
+
+                    var subtotal = 0;
+                    $.each(e, function( index, value ) {
+                            subtotal += value[5];
+                         $('#tbody').append( '<tr id="'+value[0]+'"><td data-th="Product"><div class="row"><div class="col-sm-2 hidden-xs"><img src="/media/'+value[1]+'" alt="..." class="img-responsive"/></div><div class="col-sm-10"><h4 class="nomargin">'+value[2]+'</h4><p>'+value[3]+'.</p></div></div></td><td data-th="Price">Rs. '+value[5]+'</td><td data-th="Quantity"><input type="number" class="form-control text-center" value="'+value[4]+'" id="quantity" onkeyup="updatequantity('+value[0]+')"></td><td data-th="Subtotal" class="text-center">Rs. '+value[5]*value[4]+'</td><td class="actions" data-th=""><button class="btn btn-danger btn-sm" onclick="deletedata('+value[0]+',this)"><i class="fa fa-trash-o"></i></button></td></tr>');
+                        });
+                    $('#subtotal').text('Rs'+subtotal);
+                    alert('Product has been added into cart');
+
+
+
+
+               }
+            });
+        }
+    </script>

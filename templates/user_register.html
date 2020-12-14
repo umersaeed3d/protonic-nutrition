@@ -1,0 +1,53 @@
+ {% load static %}
+ {% load staticfiles %}
+{% load bootstrap3 %}
+    {% include "header.html" %}
+<!-- products-breadcrumb -->
+	<div class="products-breadcrumb">
+		<div class="container">
+			<ul>
+				<li><i class="fa fa-home" aria-hidden="true"></i><a href="http://127.0.0.1:8000/">Home</a><span>|</span></li>
+				<li>Register</li>
+			</ul>
+		</div>
+	</div>
+<!-- //products-breadcrumb -->
+<!-- banner -->
+	<div class="banner">
+		<div class="w3l_banner_nav_left">
+
+        </div></div>
+
+
+
+
+
+
+
+
+
+
+        <div class="w3_login">
+			<h3>Sign up</h3>
+			<div class="w3_login_module">
+				<div class="module form-module">
+				  <div class="toggle"><i class="fa fa-times fa-pencil"></i>
+					<div class="tooltip"><a href="/login">Login</a></div>
+				  </div>
+
+				  <div class="form">
+					<h2>Create an account</h2>
+					<form action="#" method="post">
+                         {% csrf_token %}
+					    {%  bootstrap_form form %}
+					  <input type="submit" value="Register">
+					</form>
+				  </div>
+
+				</div>
+			</div>
+
+		</div>
+
+         {% include "footer.html" %}
+</html>

@@ -1,0 +1,441 @@
+{% load static %}
+    {% load staticfiles %}
+{% include "header.html" %}
+<!-- navbar-END-->
+                {% if messages %}
+                    <ul class="messages">
+                        {% for msg in messages %}
+                        <li>
+                            <div class="alert alert-{{msg.level_tag}}" role="alert">
+                            {{msg.message}}
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
+			<section class="slider">
+				<div class="flexslider">
+					<ul class="slides">
+						<li>
+							<div class="w3l_banner_nav_right_banner">
+								<div class="more">
+									<a href="/products/6" class="button--saqui button--round-l button--text-thick" >CLick Me</a>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="w3l_banner_nav_right_banner1">
+								<div class="more">
+									<a href="/products/4" class="button--saqui button--round-l button--text-thick" >Click Me</a>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="w3l_banner_nav_right_banner2">
+								<div class="more">
+									<a href="/products/7" class="button--saqui button--round-l button--text-thick" >Click Me</a>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</section>
+			<!-- flexSlider -->
+				<link rel="stylesheet" href="{% static 'css/flexslider.css'%}" type="text/css" media="screen" property="" />
+				<script defer src="{% static 'js/jquery.flexslider.js'%}"></script>
+				<script type="text/javascript">
+				$(window).load(function(){
+				  $('.flexslider').flexslider({
+					animation: "slide",
+					start: function(){
+					  $('body').removeClass('loading');
+					}
+				  });
+				});
+			  </script>
+			<!-- //flexSlider -->
+
+<!-- banner -->
+	<div class="banner_bottom">
+
+				<div class="col-md-4 wthree_banner_bottom_left">
+					<div class="wthree_banner_bottom_left_grid">
+						<img src="{% static 'images/4.jpg'%}" alt=" " class="img-responsive" />
+						<div class="wthree_banner_bottom_left_grid_pos">
+							<h4><span>25%</span></h4>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 wthree_banner_bottom_left">
+					<div class="wthree_banner_bottom_left_grid">
+						<img src="{% static 'images/5.jpg'%}" alt=" " class="img-responsive" />
+						<div class="wthree_banner_btm_pos">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 wthree_banner_bottom_left">
+					<div class="wthree_banner_bottom_left_grid">
+						<img src="{% static 'images/6.jpg'%}" alt=" " class="img-responsive" />
+						<div class="wthree_banner_btm_pos1">
+						</div>
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+			<div class="clearfix"> </div>
+
+<!-- top-brands -->
+    {% if product %}
+        <div class="top-brands">
+		<div class="container">
+			<h3>Our On Sale Products!</h3>
+			<div class="agile_top_brands_grids">
+                {% for p in product %}
+                    <div class="col-md-3 top_brand_left">
+					<div class="hover14 column">
+						<div class="agile_top_brand_left_grid">
+							<div class="agile_top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block" >
+										<div class="snipcart-thumb">
+											<a href="single/{{ p.p_id }}"><img src="/media/{{ p.image }}" alt=" " class="img-responsive" /></a>
+											<p>{{ p.p_name }}</p>
+											<h4>{{ p.d_price }}<span>{{ p.price }}</span></h4>
+										</div>
+										<div class="snipcart-details top_brand_home_details">
+											<form action="checkout.html" method="post">
+                                                {% csrf_token %}
+												<fieldset>
+
+													<input type="button" name="submit" value="Add to cart" onclick="addtocart({{ p.p_id }})" class="button" />
+												</fieldset>
+
+											</form>
+
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+					</div>
+				</div>
+                {% endfor %}
+
+
+
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+    {% endif %}
+    {% if plan %}
+        <div class="container">
+            <h3 style="text-align: center;color: #0a001f"><a href="/media/{{ plan }}" download>Your diet plan is ready. Click to download</a></h3>
+        </div>
+    {% endif %}
+    {% if wheys %}
+        <div class="top-brands">
+		<div class="container">
+			<h3>Whey Protein</h3>
+			<div class="agile_top_brands_grids">
+                {% for p in wheys %}
+                    <div class="col-md-3 top_brand_left">
+					<div class="hover14 column">
+						<div class="agile_top_brand_left_grid">
+							<div class="agile_top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block" >
+										<div class="snipcart-thumb">
+											<a href="single/{{ p.p_id }}"><img src="/media/{{ p.image }}" alt=" " class="img-responsive" /></a>
+											<p>{{ p.p_name }}</p>
+											<h4>{{ p.d_price }}<span>{{ p.price }}</span></h4>
+										</div>
+										<div class="snipcart-details top_brand_home_details">
+											<form action="checkout.html" method="post">
+                                                {% csrf_token %}
+												<fieldset>
+
+													<input type="button" name="submit" value="Add to cart" onclick="addtocart({{ p.p_id }})" class="button" />
+												</fieldset>
+
+											</form>
+
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+					</div>
+				</div>
+                {% endfor %}
+
+
+
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+    {% endif %}
+
+     {% if gainers %}
+            <div class="top-brands">
+            <div class="container">
+                <h3>Mass Gainers</h3>
+                <div class="agile_top_brands_grids">
+                    {% for p in gainers %}
+                        <div class="col-md-3 top_brand_left">
+                        <div class="hover14 column">
+                            <div class="agile_top_brand_left_grid">
+                                <div class="agile_top_brand_left_grid1">
+                                    <figure>
+                                        <div class="snipcart-item block" >
+                                            <div class="snipcart-thumb">
+                                                <a href="single/{{ p.p_id }}"><img src="/media/{{ p.image }}" alt=" " class="img-responsive" /></a>
+                                                <p>{{ p.p_name }}</p>
+                                                <h4>{{ p.d_price }}<span>{{ p.price }}</span></h4>
+                                            </div>
+                                            <div class="snipcart-details top_brand_home_details">
+                                                <form action="checkout.html" method="post">
+                                                    {% csrf_token %}
+                                                    <fieldset>
+
+                                                        <input type="button" name="submit" value="Add to cart" onclick="addtocart({{ p.p_id }})" class="button" />
+                                                    </fieldset>
+
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+
+
+                    <div class="clearfix"> </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+    {% if bcaas %}
+            <div class="top-brands">
+            <div class="container">
+                <h3>Bcaas</h3>
+                <div class="agile_top_brands_grids">
+                    {% for p in bcaas %}
+                        <div class="col-md-3 top_brand_left">
+                        <div class="hover14 column">
+                            <div class="agile_top_brand_left_grid">
+                                <div class="agile_top_brand_left_grid1">
+                                    <figure>
+                                        <div class="snipcart-item block" >
+                                            <div class="snipcart-thumb">
+                                                <a href="single/{{ p.p_id }}"><img src="/media/{{ p.image }}" alt=" " class="img-responsive" /></a>
+                                                <p>{{ p.p_name }}</p>
+                                                <h4>{{ p.d_price }}<span>{{ p.price }}</span></h4>
+                                            </div>
+                                            <div class="snipcart-details top_brand_home_details">
+                                                <form action="checkout.html" method="post">
+                                                    {% csrf_token %}
+                                                    <fieldset>
+
+                                                        <input type="button" name="submit" value="Add to cart" onclick="addtocart({{ p.p_id }})" class="button" />
+                                                    </fieldset>
+
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+
+
+                    <div class="clearfix"> </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    {% if fatburners %}
+        <div class="top-brands">
+		<div class="container">
+			<h3>Fat Burners</h3>
+			<div class="agile_top_brands_grids">
+                {% for p in fatburners %}
+                    <div class="col-md-3 top_brand_left">
+					<div class="hover14 column">
+						<div class="agile_top_brand_left_grid">
+							<div class="agile_top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block" >
+										<div class="snipcart-thumb">
+											<a href="single/{{ p.p_id }}"><img src="/media/{{ p.image }}" alt=" " class="img-responsive" /></a>
+											<p>{{ p.p_name }}</p>
+											<h4>{{ p.d_price }}<span>{{ p.price }}</span></h4>
+										</div>
+										<div class="snipcart-details top_brand_home_details">
+											<form action="checkout.html" method="post">
+                                                {% csrf_token %}
+												<fieldset>
+
+													<input type="button" name="submit" value="Add to cart" onclick="addtocart({{ p.p_id }})" class="button" />
+												</fieldset>
+
+											</form>
+
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+					</div>
+				</div>
+                {% endfor %}
+
+
+
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+    {% endif %}
+    {% if vitamins %}
+        <div class="top-brands">
+		<div class="container">
+			<h3>Multi Vitamins</h3>
+			<div class="agile_top_brands_grids">
+                {% for p in vitamins %}
+                    <div class="col-md-3 top_brand_left">
+					<div class="hover14 column">
+						<div class="agile_top_brand_left_grid">
+							<div class="agile_top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block" >
+										<div class="snipcart-thumb">
+											<a href="single/{{ p.p_id }}"><img src="/media/{{ p.image }}" alt=" " class="img-responsive" /></a>
+											<p>{{ p.p_name }}</p>
+											<h4>{{ p.d_price }}<span>{{ p.price }}</span></h4>
+										</div>
+										<div class="snipcart-details top_brand_home_details">
+											<form action="checkout.html" method="post">
+                                                {% csrf_token %}
+												<fieldset>
+
+													<input type="button" name="submit" value="Add to cart" onclick="addtocart({{ p.p_id }})" class="button" />
+												</fieldset>
+
+											</form>
+
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+					</div>
+				</div>
+                {% endfor %}
+
+
+
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+    {% endif %}
+
+<!-- //top-brands -->
+<!-- fresh-vegetables -->
+	<div class="fresh-vegetables">
+		<div class="container">
+			<h3>Top Sellers!</h3>
+			<div class="w3l_fresh_vegetables_grids">
+				<div class="col-md-3 w3l_fresh_vegetables_grid w3l_fresh_vegetables_grid_left">
+					<div class="w3l_fresh_vegetables_grid2">
+						<ul>
+                        <li><i class="fa fa-check" aria-hidden="true"></i><a href="/all_products">All Brands</a></li>
+                            {% for c in category %}
+
+                                <li><i class="fa fa-check" aria-hidden="true"></i><a href="/product/{{ c.c_id }}">{{ c.c_name }}</a></li>
+
+                            {% endfor %}
+
+
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-9 w3l_fresh_vegetables_grid_right">
+					<div class="col-md-4 w3l_fresh_vegetables_grid">
+						<div class="w3l_fresh_vegetables_grid1">
+							<img src="{% static 'images/flashsale.jpg'%}" alt=" " class="img-responsive" />
+						</div>
+					</div>
+					<div class="col-md-4 w3l_fresh_vegetables_grid">
+						<div class="w3l_fresh_vegetables_grid1">
+							<div class="w3l_fresh_vegetables_grid1_rel">
+								<img src="{% static 'images/body.jpg'%}" alt=" " class="img-responsive" />
+								<div class="w3l_fresh_vegetables_grid1_rel_pos">
+									<div class="more m1">
+										<a href="/products/6/" class="button--saqui button--round-l button--text-thick" data-text="Shop now">Get Shredded</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="w3l_fresh_vegetables_grid1_bottom">
+							<img src="{% static 'images/bestpre.jpg'%}" alt=" " class="img-responsive" />
+							<div class="w3l_fresh_vegetables_grid1_bottom_pos">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4 w3l_fresh_vegetables_grid">
+						<div class="w3l_fresh_vegetables_grid1">
+							<img src="{% static 'images/bodybody.jpg'%}" alt=" " class="img-responsive" />
+						</div>
+						<div class="w3l_fresh_vegetables_grid1_bottom">
+							<img src="{% static 'images/shop.jpg'%}" alt=" " class="img-responsive" />
+						</div>
+					</div>
+					<div class="clearfix"> </div>
+					<div class="agileinfo_move_text">
+						<div class="agileinfo_marquee">
+						</div>
+						<div class="agileinfo_breaking_news">
+							<span> </span>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+<!-- //fresh-vegetables -->
+<!-- newsletter -->
+
+	<div class="newsletter">
+		<div class="container">
+			<div class="w3agile_newsletter_left">
+				<h3>Receive Updates On Supplements! Sign Up Here!</h3>
+			</div>
+			<div class="w3agile_newsletter_right">
+				<a action="#" method="post">
+					<input type="email" name="Email" value="Email" onfocus="this.value = '';" onblur="if (this.value = '') {this.value = 'Email';}" required="" title="">
+                    <input type="submit" value="subscribe now">
+				</form>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+<!-- //newsletter -->
+{% include "footer.html" %}
+<!-- //script-for sticky-nav -->
+</html>
+
